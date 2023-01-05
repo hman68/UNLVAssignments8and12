@@ -1,5 +1,6 @@
 #include <fstream>
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -33,29 +34,29 @@ void makeEight(ofstream& oFile, int size, char c){
     for(int i = 1; i <= size; i++){
         cout<<i%10;
     }
-    cout << endl << count << "\t";
+    cout << endl << setw(2) << right <<  count << "\t";
     printCharacters(' ', edgeWidth);
     printCharacters(c, middleWidth);
     count++;
     for(int i = 0; i < section1Rows; i++){
-        cout << endl << count << "\t";
+        cout << endl << setw(2) << right << count << "\t";
         printCharacters(c, edgeWidth);
         printCharacters(' ', middleWidth);
         printCharacters(c, edgeWidth);
         count++;
     }
-    cout << endl << count << "\t";
+    cout << endl << setw(2) << right << count << "\t";
     printCharacters(' ', edgeWidth);
     printCharacters(c, middleWidth);
     count++;
     for(int i = 0; i < section2Rows; i++){
-        cout << endl << count << "\t";
+        cout << endl << setw(2) << right << count << "\t";
         printCharacters(c, edgeWidth);
         printCharacters(' ', middleWidth);
         printCharacters(c, edgeWidth);
         count++;
     }
-    cout << endl << count << "\t";
+    cout << endl << setw(2) << right << count << "\t";
     printCharacters(' ', edgeWidth);
     printCharacters(c, middleWidth);
     count++;
