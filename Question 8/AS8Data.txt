@@ -1,0 +1,21 @@
+figureEight 12 5
+figureEight 25 #
+figureEight 31 B
+figureEight 58 &
+figureEight 72 ^
+figureEight 98 +
+
+triangle 5 H
+triangle 60 &
+triangle 11 *
+triangle 32 +
+triangle 25 ^
+triangle 93 R
+
+slash 5 ]
+slash 6 (
+slash 19 &
+slash 27 :
+slash 49 %
+slash 75 A
+slash 91 C
