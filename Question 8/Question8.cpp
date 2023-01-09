@@ -13,7 +13,7 @@ void outputChar(ofstream& oFile,  int count, char outChar);
 
 
 int main(){
-    
+    return 0;
 }
 void makeEight(ofstream& oFile, int size, char c){
     //All variables are assigned as detailed in the instructions
