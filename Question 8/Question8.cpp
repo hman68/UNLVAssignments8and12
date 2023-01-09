@@ -153,3 +153,47 @@ void makeTriangle(ofstream& oFile, int size, char c){
     oFile << endl;
     //same function like in start, sub 2 to counteract previous 
 }
+void makeSlash(ofstream& oFile, int size, char c)
+{
+
+    int countLength = size;
+    int countWidth = 1;
+    int collumSpaces = 1;
+    int blankSpaces;
+
+    //prints header with all info regarding shape being made 
+    oFile << "Symbol: Slash   Size: " << size << "   Character:  '" << c << "''" << endl;
+
+    //prints size header at the top of the screen
+  oFile<<" "<<"\t";
+    for (int j = 0; j < size; j++)
+    {
+        oFile << countWidth%10;
+        countWidth++;
+    }
+    oFile << endl;
+
+    //prints slash shape
+    for (int i = 1; i <= size; i++)
+    {
+        oFile << i<<"\t";
+        blankSpaces = size - i;
+        
+      for(int j = 0; j < blankSpaces; j++)
+        {
+          oFile<<" ";
+        }
+      oFile<< c << endl;
+
+    }
+  countWidth = 1;
+    //prints size header at the top of the screen
+    oFile<<" "<<"\t";
+    for (int j = 0; j < size; j++)
+    {
+        oFile << countWidth%10;
+        countWidth++;
+    }
+    oFile << endl;
+
+}
