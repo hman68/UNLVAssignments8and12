@@ -11,6 +11,7 @@ void makeEight(ofstream& oFile, int size, char c);
 void makeTriangle(ofstream& oFile, int size, char c);
 bool readRecord (ifstream& iFile, string& typeString, int& lSize, char& c);
 void openInputFile(ifstream& iFile, string prompt);
+void outputChar(ofstream& oFile, int count, char outChar);
 bool openOutputFile(ofstream& oFile, string fname);
 string createOutputFilename(string typeString, int labelSize);
 
@@ -35,7 +36,8 @@ int main(){
             makeTriangle(oFile, size, c);
         }
         oFile.close();
-        return 0;
+    }
+    return 0;
 }
 
 void makeEight(ofstream& oFile, int size, char c){
