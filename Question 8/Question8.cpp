@@ -12,7 +12,9 @@ void outputChar(ofstream& oFile,  int count, char outChar);
 
 int main(){
     ofstream outFile;
+    outFile.open("test.txt");
     makeEight(outFile, 31, 'A');
+    outFile.close();
 }
 
 
@@ -31,21 +33,21 @@ void makeEight(ofstream& oFile, int size, char c){
         section2Rows++;
     }
 
-    cout << "Symbol: Figure Eight\tSize: "<<size<<"\tCharacter: "<<c<<endl;
+    oFile << "Symbol: Figure Eight\tSize: "<<size<<"\tCharacter: "<<c<<endl;
     //Prints Column Count
-    cout << "\t";
+    oFile << "\t";
     for(int i = 1; i <= size; i++){
-        cout<<i%10;
+        oFile<<i%10;
     }
     //Print the top row of the Figure Eight
-    cout << endl << setw(2) << right <<  count << "\t";
+    oFile << endl << setw(2) << right <<  count << "\t";
     outputChar(oFile, edgeWidth, ' ');
     outputChar(oFile, middleWidth, c);
     count++;
 
     //Print out the "vertical" rows of the top section of the Figure Eight
     for(int i = 0; i < section1Rows; i++){
-        cout << endl << setw(2) << right << count << "\t";
+        oFile << endl << setw(2) << right << count << "\t";
         outputChar( oFile, edgeWidth, c);
         outputChar( oFile, middleWidth, ' ');
         outputChar( oFile, edgeWidth, c);
@@ -53,14 +55,14 @@ void makeEight(ofstream& oFile, int size, char c){
     }
 
     //Print the middle row of the Figure Eight
-    cout << endl << setw(2) << right << count << "\t";
+    oFile << endl << setw(2) << right << count << "\t";
     outputChar( oFile, edgeWidth, ' ');
     outputChar( oFile, middleWidth, c);
     count++;
 
     //Print out the "vertical" rows of the bottom section of the Figure Eight
     for(int i = 0; i < section2Rows; i++){
-        cout << endl << setw(2) << right << count << "\t";
+        oFile << endl << setw(2) << right << count << "\t";
         outputChar( oFile, edgeWidth, c);
         outputChar( oFile, middleWidth, ' ');
         outputChar( oFile, edgeWidth, c);
@@ -68,14 +70,19 @@ void makeEight(ofstream& oFile, int size, char c){
     }
 
     //Print out the bottom row of the Figure Eight
-    cout << endl << setw(2) << right << count << "\t";
+    oFile << endl << setw(2) << right << count << "\t";
     outputChar( oFile, edgeWidth, ' ');
     outputChar( oFile, middleWidth, c);
     count++;
+
+    oFile << endl << "\t";
+    for(int i = 1; i <= size; i++){
+        oFile<<i%10;
+    }
 }
 
 void outputChar(ofstream& oFile, int count, char outChar){
     for(int i = 0; i < count; i++){
-        cout << outChar;
+        oFile << outChar;
     }
 }
