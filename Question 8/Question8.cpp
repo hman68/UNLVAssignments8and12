@@ -54,6 +54,23 @@ bool readRecord (ifstream& iFile, string& typeString, int& lSize, char& c){
 void openInputFile(ifstream& iFile, string prompt){
     iFile.open(prompt);
 }
+void makeTriangle(ofstream& oFile, int size, char c){
+    
+    int width = 2;
+    int endLine = size *2;
+    vector<vector<string>> vec;
+    string str(1,c);
+    oFile << "Symbol: Triangle\tSize: "<<size<<"\tCharacter: "<<c<<endl;
+    
+
+
+    // sets numbers at top, add 1 to end line for space 
+    oFile << " " << "\t";
+    for (int i = 1; i < endLine + 1; i++){
+        oFile << i%10;
+    }
+    oFile << endl;
+    oFile << endl;
 
 bool openOutputFile(ofstream& oFile, string fname){
     oFile.open(fname);
@@ -70,4 +87,48 @@ string createOutputFilename(string typeString, int labelSize){
     labelSizeString = to_string(labelSize);
     filename = typeString + "_" + labelSizeString + ".txt";
     return filename;
+}
+void makeSlash(ofstream& oFile, int size, char c)
+{
+
+    int countLength = size;
+    int countWidth = 1;
+    int collumSpaces = 1;
+    int blankSpaces;
+
+    //prints header with all info regarding shape being made 
+    oFile << "Symbol: Slash   Size: " << size << "   Character:  '" << c << "''" << endl;
+
+    //prints size header at the top of the screen
+  oFile<<" "<<"\t";
+    for (int j = 0; j < size; j++)
+    {
+        oFile << countWidth%10;
+        countWidth++;
+    }
+    oFile << endl;
+
+    //prints slash shape
+    for (int i = 1; i <= size; i++)
+    {
+        oFile << i<<"\t";
+        blankSpaces = size - i;
+        
+      for(int j = 0; j < blankSpaces; j++)
+        {
+          oFile<<" ";
+        }
+      oFile<< c << endl;
+
+    }
+  countWidth = 1;
+    //prints size header at the top of the screen
+    oFile<<" "<<"\t";
+    for (int j = 0; j < size; j++)
+    {
+        oFile << countWidth%10;
+        countWidth++;
+    }
+    oFile << endl;
+
 }
