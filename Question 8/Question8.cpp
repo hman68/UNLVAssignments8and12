@@ -45,7 +45,6 @@ bool readRecord (ifstream& iFile, string& typeString, int& lSize, char& c){
             iFile.ignore(100, '\n');
         }
         iFile >> typeString;
-        cout << typeString;
         iFile >> lSize;
         iFile >> c;
         return true;
