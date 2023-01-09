@@ -90,6 +90,7 @@ void makeTriangle(ofstream& oFile, int size, char c){
     int endLine = size *2;
     vector<vector<string>> vec;
     string str(1,c);
+    oFile << "Symbol: Triangle\tSize: "<<size<<"\tCharacter: "<<c<<endl;
     
 
 
