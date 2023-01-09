@@ -9,12 +9,35 @@ using namespace std;
 void makeSlash(ofstream& oFile, int size, char c);
 void makeEight(ofstream& oFile, int size, char c);
 void makeTriangle(ofstream& oFile, int size, char c);
-void outputChar(ofstream& oFile,  int count, char outChar);
-
+bool readRecord (ifstream& iFile, string& typeString, int& lSize, char& c);
+void openInputFile(ifstream& iFile, string prompt);
+bool openOutputFile(ofstream& oFile, string fname);
+string createOutputFilename(string typeString, int labelSize);
 
 int main(){
-    return 0;
+
+
+
+    ifstream iFile;
+    ofstream oFile;
+    string type, title;
+    int size;
+    char c;
+    openInputFile(iFile, "AS8Data.txt");
+    while(readRecord(iFile, type, size, c)){
+        title = createOutputFilename( type, size);
+        openOutputFile(oFile, title);
+        if(type == "figureEight"){
+            makeEight(oFile, size, c);
+        }else if(type == "slash"){
+            makeSlash(oFile, size, c);
+        }else if(type == "triangle"){
+            makeTriangle(oFile, size, c);
+        }
+        oFile.close();
+        return 0;
 }
+
 void makeEight(ofstream& oFile, int size, char c){
     //All variables are assigned as detailed in the instructions
     int edgeWidth = size/10; // The width of the "sides" of the Figure Eight
@@ -75,7 +98,7 @@ void makeEight(ofstream& oFile, int size, char c){
     oFile << endl << "\t";
     for(int i = 1; i <= size; i++){
         oFile<<i%10;
-    }
+     }
 }
 
 void outputChar(ofstream& oFile, int count, char outChar){
@@ -84,6 +107,23 @@ void outputChar(ofstream& oFile, int count, char outChar){
     }
 }
 
+bool readRecord (ifstream& iFile, string& typeString, int& lSize, char& c){
+    if(iFile.eof()){
+        return false;
+    }else{
+        if(iFile.peek() == '\n'){
+            iFile.ignore(100, '\n');
+        }
+        iFile >> typeString;
+        iFile >> lSize;
+        iFile >> c;
+        return true;
+    }
+}
+
+void openInputFile(ifstream& iFile, string prompt){
+    iFile.open(prompt);
+}
 void makeTriangle(ofstream& oFile, int size, char c){
     
     int width = 2;
@@ -153,6 +193,23 @@ void makeTriangle(ofstream& oFile, int size, char c){
     }
     oFile << endl;
     //same function like in start, sub 2 to counteract previous 
+}
+
+bool openOutputFile(ofstream& oFile, string fname){
+    oFile.open(fname);
+    if (oFile.is_open()){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+string createOutputFilename(string typeString, int labelSize){
+    string filename;
+    string labelSizeString;
+    labelSizeString = to_string(labelSize);
+    filename = typeString + "_" + labelSizeString + ".txt";
+    return filename;
 }
 void makeSlash(ofstream& oFile, int size, char c)
 {
