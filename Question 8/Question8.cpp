@@ -11,10 +11,7 @@ void outputChar(ofstream& oFile,  int count, char outChar);
 
 
 int main(){
-    ofstream outFile;
-    outFile.open("test.txt");
-    makeEight(outFile, 31, 'A');
-    outFile.close();
+    
 }
 
 
