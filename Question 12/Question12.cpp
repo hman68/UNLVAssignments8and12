@@ -81,7 +81,11 @@ bool getQuotedString( string& line, int &index, string & subString){
 
 }
 bool findIngredient( itemType item, string ingredient){
-
+    if(item.Ingredients.find(ingredient) > -1){
+        return true;
+    }else{
+        return false;
+    }
 }
 string makeStringUpper( string s){
 
