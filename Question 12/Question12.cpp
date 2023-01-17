@@ -88,7 +88,14 @@ bool findIngredient( itemType item, string ingredient){
     }
 }
 string makeStringUpper( string s){
-
+    int length = s.length();
+    for (int i = 0; i < length; i++) {
+        int sindex = s[i];
+        if (islower(sindex)){
+            s[i] = toupper(sindex);
+        }
+    }
+    return s;
 }
 int searchForIngredient( vector<itemType> & itemType, string ingredient, bool printEnable ){
 
