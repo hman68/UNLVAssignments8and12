@@ -90,8 +90,24 @@ int searchForIngredient( vector<itemType> & itemType, string ingredient, bool pr
 
 }
 void printRecord( itemType & item ){
-
+    cout << "Item # " << item.NDB_No<< endl;
+    cout << setprecision(14) << fixed();
+    cout << "Name:" << item.Long_Name << endl;
+    cout << "Manufacturer:" << item.Manufacturer<< endl;
+    cout << "UPC:" << item.GTIN_UPC<< endl;
+    cout << "Ingredients:" << item.Ingredients<< endl;
 }
 void sort(vector<itemType>& myList){
-    
+    bool bubble = true;
+    while (bubble){
+        bubble = false;
+        for (size_t i = 0; i < myList.size() - 1; i++){
+            if (myList[i].GTIN_UPC > myList[i+1].GTIN_UPC){
+                myList[i].GTIN_UPC += myList[i+1].GTIN_UPC;
+                myList[i+1].GTIN_UPC = myList[i].GTIN_UPC - myList[i+1].GTIN_UPC;
+                myList[i].GTIN_UPC -= myList[i+1].GTIN_UPC;
+                bubble = true;
+            }
+        }
+    }
 }
