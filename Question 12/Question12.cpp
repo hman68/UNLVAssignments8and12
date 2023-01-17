@@ -75,7 +75,10 @@ void readFile( ifstream & inFile, vector<itemType> &item){
 
 }
 bool openInputFile( ifstream & inFile ){
-
+cout << "Enter input File Name/(q-quit):";
+    string fileName = getLine();
+    iFile.open(fileName); 
+    return true;
 }
 bool getQuotedString( string& line, int &index, string & subString){
 
