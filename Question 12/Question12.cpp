@@ -30,7 +30,7 @@ void sort(vector<itemType>& myList);
 int numItems = 0;
 
 int main(){
-    
+
 }
 
 void readFile( ifstream & inFile, vector<itemType> &item){
@@ -125,13 +125,20 @@ bool getQuotedString( string& line, int &index, string & subString){
     }
 }
 bool findIngredient( itemType item, string ingredient){
- return false;
+
 }
 string makeStringUpper( string s){
+    int length = s.length();
+    for (int i = 0; i < length; i++) {
+        int sindex = s[i];
+        if (islower(sindex)){
+            s[i] = toupper(sindex);
+        }
+    }
     return s;
 }
 int searchForIngredient( vector<itemType> & itemType, string ingredient, bool printEnable ){
-    return 0;
+
 }
 void printRecord( itemType & item ){
     cout << "Item # " << item.NBD_No<< endl;
