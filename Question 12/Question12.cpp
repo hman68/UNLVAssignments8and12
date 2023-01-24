@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <iomanip>
+#include <sstream>
 using namespace std;
 
 struct itemType {
@@ -29,14 +30,7 @@ void sort(vector<itemType>& myList);
 int numItems = 0;
 
 int main(){
-    ifstream inFile;
-    inFile.open("ProductsC.csv");
-    inFile.ignore(2e+13, '\n');
-    vector<itemType> items;
-    readFile(inFile, items);
-    for(itemType i : items){
-        printRecord(i);
-    }
+    
 }
 
 void readFile( ifstream & inFile, vector<itemType> &item){
@@ -45,11 +39,10 @@ void readFile( ifstream & inFile, vector<itemType> &item){
            current;
     while(!inFile.eof()){ // While there is still data left in the file
         getline(inFile, line, '\n'); // Get the next row of data
-        cout << line;
         int i = 0, 
-            data = 0;//The current datatype that the 
+            data = 0;//The current datatype that is being parsed
         while(getQuotedString(line, i, current)){ //While the current line of data still has data in it
-            cout << current;
+            istringstream ss(current); //Create a string stream to handle any scientific notation
             switch(data){
                 case 0:
                     temp.NBD_No = stoi(current);
@@ -64,7 +57,7 @@ void readFile( ifstream & inFile, vector<itemType> &item){
                     data++;
                     break;
                 case 3:
-                    temp.GTIN_UPC = stoll(current);
+                    ss >> temp.GTIN_UPC;
                     data++;
                     break;
                 case 4:
@@ -79,14 +72,11 @@ void readFile( ifstream & inFile, vector<itemType> &item){
                     temp.Date_Available_Date = current;
                     data++;
                     break;
-                case 7:
-                    temp.Ingredients = current;
-                    data++;
-                    break;
             }
         }
+    temp.Ingredients = current;
+    data++;
     temp.itemNumber = numItems;
-    cout << numItems;
     numItems++;
     item.push_back(temp);
     temp = itemType{};
@@ -100,7 +90,6 @@ bool getQuotedString( string& line, int &index, string & subString){
     size_t pos, posEnd;
     if(index == 0){
         posEnd = line.find(',', index);
-        //cout << posEnd << line[posEnd];
         if(line[index] == '"'){
             subString = line.substr(index + 1, (posEnd - index - 1));
         }else{
@@ -110,19 +99,26 @@ bool getQuotedString( string& line, int &index, string & subString){
         return true;
     }
     pos = index;
-    //cout << pos << line[pos];
-    if(line[pos+1] == '"'){
+    if(line[pos] == '"'){
         index++;
         posEnd = line.find('"',pos+1);
     }else{
         posEnd = line.find(',', pos);
     }
-    //cout << posEnd << line[posEnd];
-    if(pos != string::npos){
+    char c = line[posEnd];
+    if(posEnd != string::npos){
         subString = line.substr(index, (posEnd - index ));
-        index = posEnd+1;
+        char test = line[index];
+        if(line[index-1] != '"'){
+            index = posEnd+1;
+        }else{
+            index = posEnd+2;
+        }
+    }else{
+            subString = line.substr(index, string::npos);
+            index = line.length() + 1;
     }
-    if(index != line.length()){
+    if(index <= line.length()-1){
         return true;
     }else{
         return false;
