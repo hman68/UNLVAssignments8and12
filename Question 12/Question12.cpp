@@ -2,6 +2,8 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <iomanip>
+#include <sstream>
 using namespace std;
 
 struct itemType {
@@ -9,7 +11,7 @@ struct itemType {
     unsigned int NBD_No;
     string Long_Name;
     string Data_Source;
-    unsigned long GTIN_UPC;
+    unsigned long long int GTIN_UPC;
     string Manufacturer;
     string Date_Modified;
     string Date_Available_Date;
@@ -38,35 +40,42 @@ void readFile( ifstream & inFile, vector<itemType> &item){
     while(!inFile.eof()){ // While there is still data left in the file
         getline(inFile, line, '\n'); // Get the next row of data
         int i = 0, 
-            data = 0;//The current datatype that the 
+            data = 0;//The current datatype that is being parsed
         while(getQuotedString(line, i, current)){ //While the current line of data still has data in it
+            istringstream ss(current); //Create a string stream to handle any scientific notation
             switch(data){
                 case 0:
                     temp.NBD_No = stoi(current);
+                    data++;
                     break;
                 case 1:
                     temp.Long_Name = current;
+                    data++;
                     break;
                 case 2:
                     temp.Data_Source = current;
+                    data++;
                     break;
                 case 3:
-                    temp.GTIN_UPC = stol(current);
+                    ss >> temp.GTIN_UPC;
+                    data++;
                     break;
                 case 4:
                     temp.Manufacturer = current;
+                    data++;
                     break;
                 case 5:
                     temp.Date_Modified = current;
+                    data++;
                     break;
                 case 6:
                     temp.Date_Available_Date = current;
-                    break;
-                case 7:
-                    temp.Ingredients = current;
+                    data++;
                     break;
             }
         }
+    temp.Ingredients = current;
+    data++;
     temp.itemNumber = numItems;
     numItems++;
     item.push_back(temp);
@@ -86,10 +95,44 @@ bool openInputFile( ifstream & inFile ){
     {
         inFile.open(fileName);
         return true;
-    }
 }
 bool getQuotedString( string& line, int &index, string & subString){
-
+    size_t pos, posEnd;
+    if(index == 0){
+        posEnd = line.find(',', index);
+        if(line[index] == '"'){
+            subString = line.substr(index + 1, (posEnd - index - 1));
+        }else{
+            subString = line.substr(index, (posEnd - index));
+        }
+        index = posEnd+1;
+        return true;
+    }
+    pos = index;
+    if(line[pos] == '"'){
+        index++;
+        posEnd = line.find('"',pos+1);
+    }else{
+        posEnd = line.find(',', pos);
+    }
+    char c = line[posEnd];
+    if(posEnd != string::npos){
+        subString = line.substr(index, (posEnd - index ));
+        char test = line[index];
+        if(line[index-1] != '"'){
+            index = posEnd+1;
+        }else{
+            index = posEnd+2;
+        }
+    }else{
+            subString = line.substr(index, string::npos);
+            index = line.length() + 1;
+    }
+    if(index <= line.length()-1){
+        return true;
+    }else{
+        return false;
+    }
 }
 bool findIngredient( itemType item, string ingredient){
     if(item.Ingredients.find(ingredient) > -1){
@@ -112,8 +155,8 @@ int searchForIngredient( vector<itemType> & itemType, string ingredient, bool pr
 
 }
 void printRecord( itemType & item ){
-    cout << "Item # " << item.NDB_No<< endl;
-    cout << setprecision(14) << fixed();
+    cout << "Item # " << item.NBD_No<< endl;
+    cout << setprecision(14) << fixed;
     cout << "Name:" << item.Long_Name << endl;
     cout << "Manufacturer:" << item.Manufacturer<< endl;
     cout << "UPC:" << item.GTIN_UPC<< endl;
