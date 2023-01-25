@@ -84,7 +84,17 @@ void readFile( ifstream & inFile, vector<itemType> &item){
 
 }
 bool openInputFile( ifstream & inFile ){
-    return false;
+    cout << "Enter input File Name/(q-quit):";
+    string fileName;
+    cin >> fileName;
+    if (fileName == "q")
+    {
+        return false
+    }
+    else
+    {
+        inFile.open(fileName);
+        return true;
 }
 bool getQuotedString( string& line, int &index, string & subString){
     size_t pos, posEnd;
