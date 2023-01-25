@@ -75,15 +75,16 @@ void readFile( ifstream & inFile, vector<itemType> &item){
 
 }
 bool openInputFile( ifstream & inFile ){
-cout << "Enter input File Name/(q-quit):";
-    string fileName = getLine();
-    if (fileName == q)
+    cout << "Enter input File Name/(q-quit):";
+    string fileName;
+    cin >> fileName;
+    if (fileName == "q")
     {
         return false
     }
     else
     {
-        iFile.open(fileName);
+        inFile.open(fileName);
         return true;
     }
 }
