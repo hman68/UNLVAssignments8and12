@@ -30,7 +30,33 @@ void sort(vector<itemType>& myList);
 int numItems = 0;
 
 int main(){
+    ifstream inFile;
+    vector<itemType> items;
+    if(!openInputFile(inFile)){
+        return 0;
+    }
+    readFile(inFile, items);
+    cout << items.size() << " records read"<<endl;
 
+    while(true){
+        string input;
+        cout << "*****************"<<endl<<"New Search"<<endl<<"Enter ingredient: ";
+        cin >> input;
+        if(input == "q"){
+            return 0;
+        }else{
+            string showList;
+            cout << "Searching for items containing "<<input << endl << "***********************"<< endl;
+            cout << "Would you like to see a list of items with "<< input<<" as an ingredient? (y/Y)";
+            cin >> showList;
+            if(makeStringUpper(showList) == "Y"){
+                cout << searchForIngredient(items, input, true );
+            }else{
+                cout << searchForIngredient(items, input, false );
+            }
+
+        }
+    }
 }
 
 void readFile( ifstream & inFile, vector<itemType> &item){
@@ -45,7 +71,7 @@ void readFile( ifstream & inFile, vector<itemType> &item){
             istringstream ss(current); //Create a string stream to handle any scientific notation
             switch(data){
                 case 0:
-                    temp.NBD_No = stoi(current);
+                    ss >> temp.NBD_No;
                     data++;
                     break;
                 case 1:
@@ -81,7 +107,8 @@ void readFile( ifstream & inFile, vector<itemType> &item){
     item.push_back(temp);
     temp = itemType{};
     }
-
+    cout << "-----------\n----End of File Reached----------";
+    return;
 }
 bool openInputFile( ifstream & inFile ){
     cout << "Enter input File Name/(q-quit):";
@@ -89,12 +116,13 @@ bool openInputFile( ifstream & inFile ){
     cin >> fileName;
     if (fileName == "q")
     {
-        return false
-    }
-    else
+        return false;
+    }else
     {
         inFile.open(fileName);
+        cout << "File Opened Successfully";
         return true;
+    }
 }
 bool getQuotedString( string& line, int &index, string & subString){
     size_t pos, posEnd;
