@@ -23,7 +23,7 @@ bool openInputFile( ifstream & inFile );
 bool getQuotedString( string& line, int &index, string & subString);
 bool findIngredient( itemType item, string ingredient);
 string makeStringUpper( string s);
-int searchForIngredient( vector<itemType> & itemType, string ingredient, bool printEnable );
+int searchForIngredient( vector<itemType> & oldList, string ingredient, bool printEnable );
 void printRecord( itemType & item );
 void sort(vector<itemType>& myList);
 
@@ -151,7 +151,20 @@ string makeStringUpper( string s){
     }
     return s;
 }
-int searchForIngredient( vector<itemType> & itemType, string ingredient, bool printEnable ){
+int searchForIngredient( vector<itemType> & oldList, string ingredient, bool printEnable ){
+    vector<itemType> foundList;
+    int foundNum = 0;
+    for(int i = 0; i < oldList.size();i++){
+        if (findIngredient(oldList[i],makeStringUpper(ingredient)) == true){
+            foundList.push_back(oldList[i]);
+            foundNum++;
+        }
+    }
+    if ( printEnable == true){
+        for(int i = 0; i < foundList.size();i++){
+            printRecord(foundList[i]);
+        }
+    }
 
 }
 void printRecord( itemType & item ){
