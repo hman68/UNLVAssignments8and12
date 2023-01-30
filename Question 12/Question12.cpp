@@ -36,17 +36,20 @@ int main(){
         return 0;
     }
     readFile(inFile, items);
-    cout << items.size() << " records read"<<endl;
-
+    cout <<endl<< items.size() << " records read"<<endl;
+    cin.ignore(1000,'\n');
     while(true){
         string input;
         cout << "*****************"<<endl<<"New Search"<<endl<<"Enter ingredient: ";
-        cin >> input;
+        cin.ignore();
+        getline(cin, input);
         if(input == "q"){
+            inFile.close();
             return 0;
         }else{
             string showList;
             cout << "Searching for items containing "<<input << endl << "***********************"<< endl;
+            cout <<"***************"<<endl<<searchForIngredient(items,input,false)<<" items found with the ingredient "<<input<<endl<<"*********"<<endl;
             cout << "Would you like to see a list of items with "<< input<<" as an ingredient? (y/Y)";
             cin >> showList;
             if(makeStringUpper(showList) == "Y"){
@@ -163,7 +166,7 @@ bool getQuotedString( string& line, int &index, string & subString){
     }
 }
 bool findIngredient( itemType item, string ingredient){
-    if(item.Ingredients.find(ingredient) > -1){
+    if(item.Ingredients.find(ingredient) != -1){
         return true;
     }else{
         return false;
@@ -189,6 +192,7 @@ int searchForIngredient( vector<itemType> & oldList, string ingredient, bool pri
         }
     }
     if ( printEnable == true){
+        sort(foundList);
         for(int i = 0; i < foundList.size();i++){
             printRecord(foundList[i]);
         }
@@ -197,6 +201,7 @@ int searchForIngredient( vector<itemType> & oldList, string ingredient, bool pri
 
 }
 void printRecord( itemType & item ){
+    cout << "**************"<<endl;
     cout << "Item # " << item.NBD_No<< endl;
     cout << setprecision(14) << fixed;
     cout << "Name:" << item.Long_Name << endl;
