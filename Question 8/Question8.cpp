@@ -16,15 +16,26 @@ bool openOutputFile(ofstream& oFile, string fname);
 string createOutputFilename(string typeString, int labelSize);
 
 int main(){
-
-
-
     ifstream iFile;
     ofstream oFile;
-    string type, title;
+    string type, title, file;
     int size;
     char c;
-    openInputFile(iFile, "AS8Data.txt");
+    cout << "Welcome to the Rebel Alliance Computational Support"<<endl;
+    cout << "     ,    ,^.    .\n";
+    cout << "   ,'|  _ \\ / _  |`.\n";
+    cout << "  / /   `\\| |/,'  \\ \\\n";
+    cout << " / :     `. ,'     : \\  \n";
+    cout << ":  |      | |      |  :\n";
+    cout << "|  :      ; :      ;  |\n";
+    cout << ":   `.__,'   `.__,'   ;\n";
+    cout << " \\                   /\n";
+    cout << " \\                 /\n";
+    cout << "  `.             ,'\n";
+    cout <<"     `-._______,-'  SSt";
+    cout << endl<<endl<<"Input Specification File: ";
+    cin >> file;
+    openInputFile(iFile, file);
     while(readRecord(iFile, type, size, c)){
         title = createOutputFilename( type, size);
         openOutputFile(oFile, title);
@@ -43,7 +54,7 @@ int main(){
 void makeEight(ofstream& oFile, int size, char c){
     //All variables are assigned as detailed in the instructions
     int edgeWidth = size/10; // The width of the "sides" of the Figure Eight
-    if(edgeWidth < 2){ 
+    if(edgeWidth < 2){
         edgeWidth = 2;
     }
     int specialRowCount = edgeWidth/2; // Determine the width of the top, middle, and bottom rows
@@ -127,16 +138,16 @@ void openInputFile(ifstream& iFile, string prompt){
     iFile.open(prompt);
 }
 void makeTriangle(ofstream& oFile, int size, char c){
-    
+
     int width = 2;
     int endLine = size *2;
     vector<vector<string>> vec;
     string str(1,c);
     oFile << "Symbol: Triangle\tSize: "<<size<<"\tCharacter: "<<c<<endl;
-    
 
 
-    // sets numbers at top, add 1 to end line for space 
+
+    // sets numbers at top, add 1 to end line for space
     oFile << " " << "\t";
     for (int i = 1; i < endLine + 1; i++){
         oFile << i%10;
@@ -194,11 +205,12 @@ void makeTriangle(ofstream& oFile, int size, char c){
         oFile << i%10;
     }
     oFile << endl;
-    //same function like in start, sub 2 to counteract previous 
+    //same function like in start, sub 2 to counteract previous
 }
 
 bool openOutputFile(ofstream& oFile, string fname){
     oFile.open(fname);
+    cout << "File \""<<fname<<"\" successfully opened"<<endl;
     if (oFile.is_open()){
         return true;
     }else{
@@ -221,7 +233,7 @@ void makeSlash(ofstream& oFile, int size, char c)
     int collumSpaces = 1;
     int blankSpaces;
 
-    //prints header with all info regarding shape being made 
+    //prints header with all info regarding shape being made
     oFile << "Symbol: Slash   Size: " << size << "   Character:  '" << c << "''" << endl;
 
     //prints size header at the top of the screen
@@ -238,7 +250,7 @@ void makeSlash(ofstream& oFile, int size, char c)
     {
         oFile << i<<"\t";
         blankSpaces = size - i;
-        
+
       for(int j = 0; j < blankSpaces; j++)
         {
           oFile<<" ";
